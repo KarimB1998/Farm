@@ -1,0 +1,239 @@
+inventory = {
+  "1001": {
+    "type": "seed",
+    "name": "wheat",
+    "quantity": 1000,
+    "price": 500
+  },
+  "1002": {
+    "type": "fertilizer",
+    "name": "nitrogen",
+    "quantity": 500,
+    "price": 50
+  },
+  "1003": {
+    "type": "type1",
+    "name": "name1",
+    "quantity": 700,
+    "price": 100
+  },
+  "1004": {
+    "type": "type2",
+    "name": "name2",
+    "quantity": 300,
+    "price": 200
+  },
+  "1005": {
+    "type": "type3",
+    "name": "name3",
+    "quantity": 1500,
+    "price": 30
+  },
+}
+
+
+#choice 1
+def quantity_value():
+  quantity = 0
+  value = 0
+  for product_id in inventory:
+    quantity += inventory[product_id]["quantity"]
+    value += inventory[product_id]["quantity"] * inventory[product_id]["price"]
+  print(f"Total quantity: {quantity}")
+  print(f"Total value: ${value}")
+
+
+#choice 2
+
+
+def add_product():
+
+  producttype = input("Enter product type: ")
+  productname = input("Enter product name: ")
+  productquantity = int(input("Enter product quantity: "))
+  productprice = float(input("Enter product price: "))
+
+  #https://www.digitalocean.com/community/tutorials/python-add-to-dictionary
+
+  inventory.update({
+    "type": producttype,
+    "name": productname,
+    "quantity": productquantity,
+    "price": productprice
+  })
+  print("Product added to inventory ☺")
+  #print(inventory)
+  # Check if user is an admin
+  #if user_type == "admin":
+  # Display menu options
+  print("1. dont add product to inventory")
+  print("2. Add product to inventory")
+  # Prompt admin to select a menu option
+  choice = int(input("Enter your choice: "))
+
+  # Perform action based on admin's choice
+  if choice == 1:
+    # View inventory
+    print("ok")
+
+  elif choice == 2:
+    # Add product to inventory
+    add_product()
+  else:
+    # Invalid choice
+    print("Invalid choice.")
+
+
+#choice4
+def update_price():
+  # Get the product ID and the new price from the Admin
+  productid = input("Enter the product ID: ")
+  newprice = float(input("Enter the new price: "))
+
+  if productid in inventory:
+    # Update the price of the product
+    inventory[productid]["price"] = newprice
+    print("Price updated ☺")
+  else:
+    print("Product not found.")
+    print(inventory)
+
+
+#choice5
+def update_quantity():
+  # Get the product ID and the new price from the Admin
+  productid = input("Enter the product ID: ")
+  newquantity = int(input("Enter the new quantity: "))
+
+  # Check if the product ID exists in the database
+  if productid in inventory:
+    # Update the price of the product
+    inventory[productid]["quantity"] = newquantity
+    print("quantity updated ☺")
+  else:
+    print("Product not found.")
+    print(inventory)
+
+
+#choice6
+def delete_product():
+
+  # Prompt the Admin to enter the product ID to be removed
+  product_id = int(input("Enter the product ID to be removed: "))
+
+  # Check if the product ID exists in the inventory
+  if product_id in inventory:
+    # Remove the product from the inventory
+    x = inventory.pop(product_id)
+    print("Product removed ☺")
+  else:
+    print("Product not found in inventory.")
+
+
+#choice7
+#def search_name():
+#choice8
+def sort_products_by_quantity_desc(inventory):
+  sorted_products = sorted(inventory,
+                           key=lambda p: p['quantity'],
+                           reverse=True)
+  return sorted_products
+
+
+# Set the maximum number of login attempts to 5
+ATTEMPTS = 5
+
+# Initialize the number of login attempts to 0
+count_login = 0
+
+# Display the login form
+print("HELLO system!")
+print("PLEASE LOG IN HERE :")
+while count_login < ATTEMPTS:
+  username = input("username: ")
+  password = input("password: ")
+
+  # Check the user type and password
+  if username == "farmer" and password == "":
+    print("This is the Farmer menu.")
+    break
+  elif username == "admin" and password == "admin123123":
+    print("This is the Admin menu.")
+    break
+  else:
+    print("Incorrect Username and/or Password. Please try again.")
+    count_login = count_login + 1
+
+# If the user exceeds the maximum number of login attempts, display an error message
+if count_login == ATTEMPTS:
+  print(
+    "incorrect password and username ,exeeds 5 attempts. Please try again later."
+  )
+else:
+  print("display system")
+
+  print("Welcome to the Admin menu!")
+  while True:
+    print("Please select an option:")
+    print("1. Display Inventory Statistics")
+    print("2. Add Product to Inventory")
+    print("3. Display All Products in Inventory (sorted by product ID)")
+    print("4. Update Product Price")
+    print("5. Update Product Quantity")
+    print("6. Remove Product from Inventory")
+    print("7. Search Product by Name")
+    print("8. Sort Products by Quantity (descending)")
+    print("9. Exit")
+
+    # Get the user's choice
+    choice = input("Enter your choice (1-9): ")
+
+    # Execute the corresponding function based on the user's choice
+    if choice == "1":
+      print("Displaying Inventory Statistics...")
+      quantity_value()
+
+      # code to display inventory statistics
+    elif choice == "2":
+      print("Adding Product to Inventory...")
+      # code to add product to inventory
+      add_product()
+      print(inventory)
+    elif choice == "3":
+      print("Displaying All Products in Inventory (sorted by product ID)...")
+
+      # code to display all products in inventory sorted by product ID
+    elif choice == "4":
+      print("Updating Product Price...")
+      update_price()
+      print(inventory)
+      # code to update product price
+    elif choice == "5":
+      print("Updating Product Quantity...")
+      update_quantity()
+      print(inventory)
+      # code to update product quantity
+    elif choice == "6":
+      print("Removing Product from Inventory...")
+      delete_product()
+      print(inventory)
+      # code to remove product from inventory
+    elif choice == "7":
+      print("Searching Product by Name...")
+
+      print(inventory)
+
+      # code to search product by name
+    elif choice == "8":
+      sorted_products = sort_products_by_quantity_desc(inventory)
+      print("Sorting Products by Quantity (descending)...")
+      #print("Sorted products by quantity (descending):")
+      for product in sorted_products:
+        print("{product['name']}: {product['quantity']}")
+
+    # code to sort products by quantity in descending order
+    elif choice == "9":
+      print("Exiting...")
+      break
+    else:
+      print("Invalid choice. Please try again.")
